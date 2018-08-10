@@ -3,6 +3,7 @@ package com.zhangzhe.aboutspringmvc;
 import java.util.List;
 
 import com.zhangzhe.aboutspringmvc.interceptor.DemoInterceptor;
+import com.zhangzhe.aboutspringmvc.messageconverter.MyMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -69,6 +70,16 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {// 2
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(1000000);
         return multipartResolver;
+    }
+
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(converter());
+    }
+
+    @Bean
+    public MyMessageConverter converter(){
+        return new MyMessageConverter();
     }
 
 }
